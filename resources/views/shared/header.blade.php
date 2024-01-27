@@ -114,7 +114,6 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
             <a href="./profile.html" class="dropdown-item">Profile</a>
-            <a href="./settings.html" class="dropdown-item">Settings</a>
             <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
           </div>
         </div>

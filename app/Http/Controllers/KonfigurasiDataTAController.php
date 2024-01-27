@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class KonfigurasiDataTA extends Controller
+class KonfigurasiDataTAController extends Controller
 {
     public $menu = 'konfigurasi';
     public $cmenu ='kta';

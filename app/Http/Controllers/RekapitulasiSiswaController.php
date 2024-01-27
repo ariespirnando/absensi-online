@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RekapitulasiSiswa extends Controller
+class RekapitulasiSiswaController extends Controller
 {
     public $menu = 'rekapitulasi';
     public $cmenu ='rsiswa';
