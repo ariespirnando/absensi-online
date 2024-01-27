@@ -21,7 +21,6 @@ return new class extends Migration
             $table->text('alamat');
             $table->string('nama_orang_tua');
             $table->string('telepon_orang_tua');
-            $table->string('kelas');
             $table->enum('status', ['A', 'N'])->default('A');
             $table->date('tanggal_masuk');
             $table->timestamps();
