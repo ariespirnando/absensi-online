@@ -7,5 +7,9 @@ use Illuminate\Http\Request;
 
 class KonfigurasiDataKelas extends Controller
 {
-    //
+    public $menu = 'konfigurasi';
+    public $cmenu ='kkelas';
+    public function index(){
+        return view('contents.konfigurasi-data.kelas.index',['menu'=> $this->menu, 'cmenu'=>$this->cmenu]);
+    }
 }

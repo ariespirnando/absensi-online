@@ -17,7 +17,7 @@ class AuthCheck
     public function handle(Request $request, Closure $next, $roles): Response
     {
         if(!Auth::check()){
-            return redirect('login');
+            return redirect('/');
         }
 
         $user = Auth::user();
@@ -26,6 +26,6 @@ class AuthCheck
             return $next($request);
         }
 
-        return redirect('login')->with('error','Maaf anda tidak memiliki akses');
+        return redirect('/')->with('error','Maaf anda tidak memiliki akses');
     }
 }

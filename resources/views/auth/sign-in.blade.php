@@ -36,23 +36,25 @@
         <div class="text-center mb-4">
           <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36" alt=""></a>
         </div>
+
         <div class="card card-md">
           <div class="card-body">
             <h2 class="h2 text-center mb-4">Login to your account</h2>
-            <form action="./" method="get" autocomplete="off" novalidate>
+            <form action="{{ route('proses_login') }}" method="post" autocomplete="off" novalidate>
+            {{ csrf_field() }}
               <div class="mb-3">
-                <label class="form-label">Email address</label>
-                <input type="email" class="form-control" placeholder="your@email.com" autocomplete="off">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off">
               </div>
               <div class="mb-2">
                 <label class="form-label">
                   Password
                   <span class="form-label-description">
-                    <a href="./forgot-password.html">I forgot password</a>
+                    <a href="{{ route('forgot_password') }}">I forgot password</a>
                   </span>
                 </label>
                 <div class="input-group input-group-flat">
-                  <input type="password" class="form-control"  placeholder="Your password"  autocomplete="off">
+                  <input type="password" name="password" class="form-control"  placeholder="Your password"  autocomplete="off">
                 </div>
               </div>
               <div class="mb-2">

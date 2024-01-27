@@ -23,15 +23,6 @@ class AuthController extends Controller
     }
 
     public function forgot_password(){
-        $user = Auth::user();
-        if($user){
-            if($user->group_level =='ADMIN'){
-                return redirect()->intended('admin');
-            }
-            else if($user->group_level =='SISWA'){
-                return redirect()->intended('user');
-            }
-        }
         return view('auth.forgot-password');
     }
 
@@ -50,15 +41,14 @@ class AuthController extends Controller
             }
             return redirect()->intended('/');
         }
-        return redirect('login')
+        return redirect('/')
             ->withInput()
             ->withErrors(['login_gagal'=>'These credentials does not match our records']);
     }
 
     public function proses_forgot_password(Request $request){
         $request->validate([
-            'username'=>'required',
-            'password'=>'required'
+            'email'=>'required'
         ]);
         $credential = $request->only('username','password');
         if(Auth::attempt($credential)){
@@ -70,7 +60,7 @@ class AuthController extends Controller
             }
             return redirect()->intended('/');
         }
-        return redirect('login')
+        return redirect('/')
             ->withInput()
             ->withErrors(['login_gagal'=>'These credentials does not match our records']);
     }
@@ -78,6 +68,6 @@ class AuthController extends Controller
     public function logout(Request $request){
         $request->session()->flush();
         Auth::logout();
-        return Redirect('login');
+        return Redirect('/');
     }
 }
