@@ -147,7 +147,7 @@
                 <div class="mb-3">
                 <label class="form-label">NIP</label>
                     <div class="input-group input-group-flat">
-                    <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+                    <input type="text" class="form-control" name="nip" placeholder="Your report name">
                     </div>
                 </div>
             </div>
@@ -155,14 +155,14 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Guru</label>
                     <div class="input-group input-group-flat">
-                        <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+                        <input type="text" class="form-control" name="nama" placeholder="Your report name">
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="mb-3">
                   <label class="form-label">Jenis Kelamin</label>
-                  <select class="form-select">
+                  <select class="form-select" name="jeniskelamin">
                     <option value="L" selected>Laki -Laki</option>
                     <option value="P">Perempuan</option>
                   </select>
@@ -172,26 +172,26 @@
                 <div class="mb-3">
                     <label class="form-label">No Kontak</label>
                     <div class="input-group input-group-flat">
-                        <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+                        <input type="text" name="nokontak" class="form-control" name="example-text-input" placeholder="Your report name">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="mb-3">
                   <label class="form-label">Tempat</label>
-                  <input type="text" class="form-control">
+                  <input type="text" name="tempatlahir" class="form-control">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="mb-3">
                   <label class="form-label">Tanggal Lahir</label>
-                  <input type="date" class="form-control">
+                  <input type="date" name="tanggallahir" class="form-control">
                 </div>
               </div>
               <div class="col-lg-12">
                 <div>
                   <label class="form-label">Alamat</label>
-                  <textarea class="form-control" rows="3"></textarea>
+                  <textarea class="form-control" name="alamat" rows="3"></textarea>
                 </div>
               </div>
         </div>
@@ -201,7 +201,7 @@
             <div class="col-lg-8">
                 <div class="mb-3">
                     <label class="form-label">Tanggal Bergabung</label>
-                    <input type="date" class="form-control">
+                    <input type="date" name="tanggalbergabung" class="form-control">
                   </div>
             </div>
         </div>

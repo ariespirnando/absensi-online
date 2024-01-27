@@ -6,8 +6,8 @@ use Livewire\Component;
 
 class Pelajaran extends Component
 {
-    public $kodePelajaran;
-    public $namaPelajaran;
+    public $nama;
+    public $keterangan;
 
     public function render()
     {
