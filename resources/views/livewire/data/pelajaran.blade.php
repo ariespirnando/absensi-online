@@ -128,12 +128,12 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">Kode Mata Pelajaran</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+            <label class="form-label">Nama Mata Pelajaran</label>
+            <input type="text" class="form-control" name="nama" placeholder="Nama Mata Pelajaran">
           </div>
           <div class="mb-3">
-            <label class="form-label">Nama Mata Pelajaran</label>
-            <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+            <label class="form-label">Keterangan</label>
+            <textarea class="form-control" name="keterangan" rows="3"></textarea>
           </div>
         </div>
         <div class="modal-footer">

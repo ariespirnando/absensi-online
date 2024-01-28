@@ -145,7 +145,7 @@
                 <div class="mb-3">
                 <label class="form-label">NIS</label>
                     <div class="input-group input-group-flat">
-                    <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+                    <input type="text" name="nis" class="form-control"  placeholder="NIS">
                     </div>
                 </div>
             </div>
@@ -153,14 +153,14 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Siswa</label>
                     <div class="input-group input-group-flat">
-                        <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+                        <input type="text" class="form-control" name="nama" placeholder="Nama Siswa">
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="mb-3">
                   <label class="form-label">Jenis Kelamin</label>
-                  <select class="form-select">
+                  <select class="form-select" name="jenis_kelamin">
                     <option value="L" selected>Laki -Laki</option>
                     <option value="P">Perempuan</option>
                   </select>
@@ -169,19 +169,25 @@
             <div class="col-lg-4">
                 <div class="mb-3">
                   <label class="form-label">Tempat</label>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" name="tempat_lahir" placeholder="Tempat Lahir">
                 </div>
               </div>
               <div class="col-lg-4">
                 <div class="mb-3">
                   <label class="form-label">Tanggal Lahir</label>
-                  <input type="date" class="form-control">
+                  <input type="date" name="tanggal_lahir" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="mb-3">
+                  <label class="form-label">Tanggal Masuk</label>
+                  <input type="date" name="tanggal_masuk" class="form-control">
                 </div>
               </div>
               <div class="col-lg-12">
                 <div>
                   <label class="form-label">Alamat</label>
-                  <textarea class="form-control" rows="3"></textarea>
+                  <textarea class="form-control" name="alamat" rows="3"></textarea>
                 </div>
               </div>
         </div>
@@ -192,7 +198,7 @@
                 <div class="mb-3">
                     <label class="form-label">Nama Wali Siswa</label>
                     <div class="input-group input-group-flat">
-                        <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+                        <input type="text" class="form-control" name="nama_orang_tua" placeholder="Nama Wali Siswa">
                     </div>
                 </div>
             </div>
@@ -200,7 +206,7 @@
                 <div class="mb-3">
                 <label class="form-label">No HP Wali Siswa</label>
                     <div class="input-group input-group-flat">
-                    <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+                    <input type="text" class="form-control" name="telepon_orang_tua" placeholder="No HP Wali Siswa">
                     </div>
                 </div>
             </div>

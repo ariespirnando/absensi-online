@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->enum('pendidikan', ['SMA', 'D3','S1','S2','S3']);
             $table->text('alamat');
-            $table->date('tempat_lahir');
+            $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('telepon');
             $table->date('tanggal_bergabung');
