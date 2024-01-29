@@ -31,10 +31,9 @@ class Tahunajar extends Component
         if($this->searchData!=""){
             $dataTa = ModelsTahunAjar::where(
                 function ($query) {
-                    $query->where('nip', 'like', '%'.$this->searchData.'%')
-                    ->orWhere('nama', 'like', '%'.$this->searchData.'%')
-                    ->orWhere('telepon', 'like', '%'.$this->searchData.'%')
-                    ->orWhere('pendidikan', 'like', '%'.$this->searchData.'%');
+                    $query->where('tahun', 'like', '%'.$this->searchData.'%')
+                    ->orWhere('semester', 'like', '%'.$this->searchData.'%')
+                    ->orWhere('keterangan', 'like', '%'.$this->searchData.'%');
                 })->where('status', 'A')->orderBy('nama','asc')->paginate($this->totalPagging);
         }else{
             $dataTa = ModelsTahunAjar::where('status', 'A')->orderBy('nama','asc')->paginate($this->totalPagging);
