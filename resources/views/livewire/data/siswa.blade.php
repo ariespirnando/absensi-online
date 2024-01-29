@@ -99,10 +99,11 @@
                 <tbody>
                   @foreach ($dataSiswa as $key => $values )
                   <tr>
-                    <td><span class="text-muted">1</span></td>
-                    <td><span class="text-muted">001401</span></td>
-                    <td><span class="text-muted">001401</span></td>
-                    <td><span class="text-muted">001401</span></td>  
+                    <td><span class="text-muted">{{ $dataGuru->firstItem() + $key }}</span></td>
+                    <td><span class="text-muted">{{ $values->nis }}</span></td>
+                    <td><span class="text-muted">{{ $values->nama }}</span></td>
+                    <td><span class="text-muted">{{ $values->jenis_kelamin }}</span></td>  
+                    <td><span class="text-muted">{{ $values->tempat_lahir }} / {{ $values->tanggal_lahir }}</span></td>  
                     <td>
                         <div class="btn-list flex-nowrap">
                             <a wire:click='setDetails({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
