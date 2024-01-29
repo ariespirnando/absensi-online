@@ -153,6 +153,9 @@
                 <label class="form-label">NIS</label>
                     <div class="input-group input-group-flat">
                     <input type="text" name="nis" class="form-control"  placeholder="NIS" wire:model='nis'>
+                    @error('nis')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                     </div>
                 </div>
             </div>
@@ -161,6 +164,9 @@
                     <label class="form-label">Nama Siswa</label>
                     <div class="input-group input-group-flat">
                         <input type="text" class="form-control" name="nama" placeholder="Nama Siswa" wire:model='nama'>
+                        @error('nama')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -172,24 +178,36 @@
                     <option value="L">Laki -Laki</option>
                     <option value="P">Perempuan</option>
                   </select>
+                  @error('jenis_kelamin')
+                  <div class="text-danger">{{ $message }}</div>
+                  @enderror
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="mb-3">
                   <label class="form-label">Tempat</label>
                   <input wire:model='tempat_lahir' type="text" class="form-control" name="tempat_lahir" placeholder="Tempat Lahir">
+                  @error('tempat_lahir')
+                  <div class="text-danger">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               <div class="col-lg-4">
                 <div class="mb-3">
                   <label class="form-label">Tanggal Lahir</label>
                   <input wire:model='tanggal_lahir' type="date" name="tanggal_lahir" class="form-control">
+                  @error('tanggal_lahir')
+                  <div class="text-danger">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               <div class="col-lg-4">
                 <div class="mb-3">
                   <label class="form-label">Tanggal Masuk</label>
                   <input wire:model='tanggal_masuk' type="date" name="tanggal_masuk" class="form-control">
+                  @error('tanggal_masuk')
+                  <div class="text-danger">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               <div class="col-lg-12">
