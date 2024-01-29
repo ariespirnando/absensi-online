@@ -11,7 +11,7 @@
             Overview
           </div>
           <h3 class="page-title">
-            Data - Guru
+            Konfiguras - Tahun Ajar
           </h3>
         </div>
 
@@ -101,9 +101,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($dataGuru as $key => $values )
+                  @foreach ($dataTa as $key => $values )
                   <tr>
-                    <td><span class="text-muted">{{ $dataGuru->firstItem() + $key }}</span></td>
+                    <td><span class="text-muted">{{ $dataTa->firstItem() + $key }}</span></td>
                     <td><span class="text-muted">{{ $values->nip }}</span></td>
                     <td><span class="text-muted">{{ $values->nama }}</span></td>
                     <td><span class="text-muted">{{ $values->telepon }}</span></td>
