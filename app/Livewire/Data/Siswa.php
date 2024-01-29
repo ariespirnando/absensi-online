@@ -38,10 +38,11 @@ class Siswa extends Component
         if($this->searchData!=""){
             $dataSiswa = ModelsSiswa::where(
                 function ($query) {
-                    $query->where('nip', 'like', '%'.$this->searchData.'%')
+                    $query->where('nis', 'like', '%'.$this->searchData.'%')
                     ->orWhere('nama', 'like', '%'.$this->searchData.'%')
-                    ->orWhere('telepon', 'like', '%'.$this->searchData.'%')
-                    ->orWhere('pendidikan', 'like', '%'.$this->searchData.'%');
+                    ->orWhere('jenis_kelamin', 'like', '%'.$this->searchData.'%')
+                    ->orWhere('tempat_lahir', 'like', '%'.$this->searchData.'%')
+                    ->orWhere('tanggal_lahir', 'like', '%'.$this->searchData.'%');
                 })->where('status', 'A')->orderBy('nama','asc')->paginate($this->totalPagging);
         }else{
             $dataSiswa = ModelsSiswa::where('status', 'A')->orderBy('nama','asc')->paginate($this->totalPagging);
