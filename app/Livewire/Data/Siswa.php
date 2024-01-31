@@ -118,6 +118,7 @@ class Siswa extends Component
             $this->alamat = $siswa->alamat;
             $this->telepon_orang_tua = $siswa->telepon_orang_tua;
             $this->tanggal_masuk = $siswa->tanggal_masuk;
+            $this->nama_orang_tua = $siswa->nama_orang_tua;
             $this->editMode = true;
             $this->detailMode = false;
         }
@@ -134,6 +135,7 @@ class Siswa extends Component
             $this->alamat = $siswa->alamat;
             $this->telepon_orang_tua = $siswa->telepon_orang_tua;
             $this->tanggal_masuk = $siswa->tanggal_masuk;
+            $this->nama_orang_tua = $siswa->nama_orang_tua;
             $this->editMode = false;
             $this->detailMode = true;
         }
@@ -147,6 +149,7 @@ class Siswa extends Component
         $this->alamat = '';
         $this->telepon_orang_tua = '';
         $this->tanggal_masuk = '';
+        $this->nama_orang_tua = '';
         $this->editMode = false;
         $this->detailMode = false;
     }

@@ -36,7 +36,7 @@ class Tahunajar extends Component
                     ->orWhere('keterangan', 'like', '%'.$this->searchData.'%');
                 })->where('status', 'A')->orderBy('nama','asc')->paginate($this->totalPagging);
         }else{
-            $dataTa = ModelsTahunAjar::where('status', 'A')->orderBy('nama','asc')->paginate($this->totalPagging);
+            $dataTa = ModelsTahunAjar::where('status', 'A')->orderBy('tahun','asc')->paginate($this->totalPagging);
         }
 
         return view('livewire.konfigurasidata.tahunajar',['dataTa'=>$dataTa]);
@@ -66,11 +66,11 @@ class Tahunajar extends Component
         } catch (QueryException $e) {
             Log::error('Database query failed: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Tahun Ajar gagal disimpan');
+            session()->flash('error', 'Tahun Ajar gagal disimpan'. $e->getMessage());
         } catch (\Exception $e) {
             Log::error('An unexpected error occurred: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Tahun Ajar gagal disimpan');
+            session()->flash('error', 'Tahun Ajar gagal disimpan'. $e->getMessage());
         }
         $this->setClearModel();
     }

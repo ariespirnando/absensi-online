@@ -15,7 +15,7 @@
           </h3>
         </div>
 
-        @if(session('message')) 
+        @if(session('message'))
         <div class="alert alert-success alert-dismissible" role="alert">
         <div class="d-flex">
             <div>
@@ -24,10 +24,10 @@
             </div>
         </div>
         <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-        </div> 
+        </div>
         @endif
 
-        @if(session('error')) 
+        @if(session('error'))
         <div class="alert alert-danger alert-dismissible" role="alert">
         <div class="d-flex">
             <div>
@@ -36,9 +36,9 @@
             </div>
         </div>
         <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-        </div> 
+        </div>
         @endif
-          
+
         <!-- Page title actions -->
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
@@ -92,18 +92,18 @@
                     <th width="10%">NIS</th>
                     <th width="40%">Nama</th>
                     <th width="5%">Jenis Kelamin</th>
-                    <th width="10%">Tempat & Tanggal Lahir</th>   
+                    <th width="10%">Tempat & Tanggal Lahir</th>
                     <th width="20%">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($dataSiswa as $key => $values )
                   <tr>
-                    <td><span class="text-muted">{{ $dataGuru->firstItem() + $key }}</span></td>
+                    <td><span class="text-muted">{{ $dataSiswa->firstItem() + $key }}</span></td>
                     <td><span class="text-muted">{{ $values->nis }}</span></td>
                     <td><span class="text-muted">{{ $values->nama }}</span></td>
-                    <td><span class="text-muted">{{ $values->jenis_kelamin }}</span></td>  
-                    <td><span class="text-muted">{{ $values->tempat_lahir }} / {{ $values->tanggal_lahir }}</span></td>  
+                    <td><span class="text-muted">{{ $values->jenis_kelamin }}</span></td>
+                    <td><span class="text-muted">{{ $values->tempat_lahir }} / {{ $values->tanggal_lahir }}</span></td>
                     <td>
                         <div class="btn-list flex-nowrap">
                             <a wire:click='setDetails({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
@@ -136,7 +136,7 @@
   <div wire:ignore.self class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header"> 
+        <div class="modal-header">
           @if ($editMode==true)
           <h5 class="modal-title">Ubah Data Siswa</h5>
           @elseif ($detailMode==true)

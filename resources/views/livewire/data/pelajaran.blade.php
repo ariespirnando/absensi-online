@@ -15,7 +15,7 @@
           </h3>
         </div>
 
-        @if(session('message')) 
+        @if(session('message'))
         <div class="alert alert-success alert-dismissible" role="alert">
         <div class="d-flex">
             <div>
@@ -24,10 +24,10 @@
             </div>
         </div>
         <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-        </div> 
+        </div>
         @endif
 
-        @if(session('error')) 
+        @if(session('error'))
         <div class="alert alert-danger alert-dismissible" role="alert">
         <div class="d-flex">
             <div>
@@ -36,9 +36,9 @@
             </div>
         </div>
         <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-        </div> 
+        </div>
         @endif
-          
+
         <!-- Page title actions -->
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
@@ -97,20 +97,20 @@
                 <tbody>
                   @foreach ($dataPelajaran as $key => $values )
                   <tr>
-                    <td><span class="text-muted">{{ $dataPelajaran>firstItem() + $key }}</span></td>
+                    <td><span class="text-muted">{{ $dataPelajaran->firstItem() + $key }}</span></td>
                     <td><span class="text-muted">{{ $values->nama }}</span></td>
                     <td><span class="text-muted">{{ $values->keterangan }}</span></td>
                     <td>
                         <div class="btn-list flex-nowrap">
-                            <a wire:click='setDetails({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
+                            {{-- <a wire:click='setDetails({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
                                 Detail
-                            </a>
+                            </a> --}}
                             <a wire:click='setEdited({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
                               Ubah
                             </a>
                             <a wire:click='setDeleted({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-simple">
                               Hapus
-                            </a> 
+                            </a>
                         </div>
                     </td>
                   </tr>
@@ -132,7 +132,7 @@
   <div wire:ignore.self class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header"> 
+        <div class="modal-header">
           @if ($editMode==true)
           <h5 class="modal-title">Ubah Data Pelajaran</h5>
           @elseif ($detailMode==true)
@@ -171,7 +171,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
             Simpan Data Pelajaran
           </a>
-          @endif 
+          @endif
         </div>
       </div>
     </div>
