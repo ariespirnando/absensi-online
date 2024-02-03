@@ -11,6 +11,8 @@ use App\Http\Controllers\DataPelajaranController;
 use App\Http\Controllers\KonfigurasiDataTAController;
 use App\Http\Controllers\RekapitulasiKelasController;
 use App\Http\Controllers\KonfigurasiDataKelasController;
+use App\Http\Controllers\KonfigurasiPelajaranController;
+use App\Http\Controllers\KonfigurasiSiswaController;
 use App\Http\Controllers\RekapitulasiSiswaController;
 
 /*
@@ -41,7 +43,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('data/pelajaran', [DataPelajaranController::class,'index'])->name('data_pelajaran');
         Route::get('data/siswa', [DataSiswaController::class,'index'])->name('data_siswa');
         Route::get('konfigurasi/ta', [KonfigurasiDataTAController::class,'index'])->name('konfigurasi_ta');
-        Route::get('konfigurasi/kelas', [KonfigurasiDataKelasController::class,'index'])->name('konfigurasi_kelas');
+        Route::get('konfigurasi/kelas/{id}', [KonfigurasiDataKelasController::class,'index'])->name('konfigurasi_kelas');
+        Route::get('konfigurasi/pelajaran/{id}', [KonfigurasiPelajaranController::class,'index'])->name('konfigurasi_pelajaran');
+        Route::get('konfigurasi/siswa/{id}', [KonfigurasiSiswaController::class,'index'])->name('konfigurasi_siswa');
         Route::get('absensi', [AbsensiController::class,'index'])->name('absensi');
         Route::get('rekapitulasi/kelas', [RekapitulasiKelasController::class,'index'])->name('rekapitulasi_kelas');
         Route::get('rekapitulasi/siswa', [RekapitulasiSiswaController::class,'index'])->name('rekapitulasi_siswa');

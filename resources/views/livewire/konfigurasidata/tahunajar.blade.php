@@ -108,6 +108,9 @@
                     <td><span class="text-muted">{{ $values->keterangan }}</span></td>
                     <td>
                         <div class="btn-list flex-nowrap">
+                            <a href="{{ route('konfigurasi_kelas', ['id'=>encrypt($values->id)]) }}" class="btn">
+                                Kelas
+                            </a>
                             <a wire:click='setEdited({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
                               Ubah
                             </a>

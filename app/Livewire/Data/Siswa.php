@@ -89,11 +89,11 @@ class Siswa extends Component
         } catch (QueryException $e) {
             Log::error('Database query failed: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Data Siswa gagal disimpan');
+            session()->flash('error', 'Data Siswa gagal disimpan'. $e->getMessage());
         } catch (\Exception $e) {
             Log::error('An unexpected error occurred: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Data Siswa gagal disimpan');
+            session()->flash('error', 'Data Siswa gagal disimpan'. $e->getMessage());
         }
         $this->setClearModel();
     }

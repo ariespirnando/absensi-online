@@ -11,7 +11,7 @@
             Overview
           </div>
           <h3 class="page-title">
-            Konfigurasi TA & Kelas
+            Konfigurasi TA & Kelas X Siswa
           </h3>
         </div>
         <br>
@@ -56,12 +56,12 @@
               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
             </a>
-            <a href="{{ route('konfigurasi_ta') }}" class="btn btn-default d-none d-sm-inline-block">
+            <a href="{{ route('konfigurasi_kelas', ['id'=>encrypt($ta_id)]) }}" class="btn btn-default d-none d-sm-inline-block">
                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
                 Kembali
             </a>
-            <a href="{{ route('konfigurasi_ta') }}" class="btn btn-default d-sm-none btn-icon" >
+            <a href="{{ route('konfigurasi_kelas', ['id'=>encrypt($ta_id)]) }}" class="btn btn-default d-sm-none btn-icon" >
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
             </a>
@@ -77,7 +77,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Kelas TA {{$tahun_ajarDesc}}</h3>
+              <h3 class="card-title">Siswa Kelas {{$kelasDesc}}</h3>
             </div>
             <div class="card-body border-bottom py-3">
               <div class="d-flex">
@@ -103,27 +103,19 @@
                      <th class="w-1">No. <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>
                     </th>
-                    <th width="10%">Group</th>
-                    <th width="10%">Kelas</th>
-                    <th width="40%">Wali Kelas</th>
-                    <th width="40%">Aksi</th>
+                    <th width="10%">NIS</th>
+                    <th width="60%">Nama</th>
+                    <th width="20%">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($dataKelas as $key => $values )
+                  @foreach ($dataKonfSiswa as $key => $values )
                   <tr>
-                    <td><span class="text-muted">{{ $dataKelas->firstItem() + $key }}</span></td>
-                    <td><span class="text-muted">{{ $values->group }}</span></td>
+                    <td><span class="text-muted">{{ $dataKonfSiswa->firstItem() + $key }}</span></td>
+                    <td><span class="text-muted">{{ $values->nis }}</span></td>
                     <td><span class="text-muted">{{ $values->nama }}</span></td>
-                    <td><span class="text-muted">{{ $values->gurusnames }}</span></td>
                     <td>
                         <div class="btn-list flex-nowrap">
-                            <a href="{{ route('konfigurasi_pelajaran', ['id'=>encrypt($values->id)]) }}" class="btn">
-                                Daftar Pelajaran
-                            </a>
-                            <a href="{{ route('konfigurasi_siswa', ['id'=>encrypt($values->id)]) }}" class="btn">
-                                Daftar Siswa
-                            </a>
                             <a wire:click='setEdited({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
                               Ubah
                             </a>
@@ -138,7 +130,7 @@
               </table>
             </div>
             <div class="card-footer d-flex align-items-center">
-             {{ $dataKelas->links()}}
+             {{ $dataKonfSiswa->links()}}
             </div>
           </div>
         </div>
@@ -153,56 +145,27 @@
       <div class="modal-content">
         <div class="modal-header">
           @if ($editMode==true)
-          <h5 class="modal-title">Ubah Data Kelas</h5>
+          <h5 class="modal-title">Ubah Konfigurasi Siswa</h5>
           @elseif ($detailMode==true)
-          <h5 class="modal-title">Detail Data Kelas</h5>
+          <h5 class="modal-title">Detail Konfigurasi Siswa</h5>
           @else
-          <h5 class="modal-title">Tambah Guru</h5>
+          <h5 class="modal-title">Tambah Siswa</h5>
           @endif
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label class="form-label">Group Kelas</label>
-                    <select {{ $detailMode?"disabled":""}} wire:model='group' class="form-select" name="group">
-                    <option value="">Pilih Group Kelas</option>
-                    <option value="X">X</option>
-                    <option value="XI">XI</option>
-                    <option value="XII">XII</option>
-                    </select>
-                    @error('group')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                <label class="form-label">Nama Kelas</label>
-                    <div class="input-group input-group-flat">
-                    <input {{ $detailMode?"disabled":""}} type="text" class="form-control" name="nama" placeholder="Nama Kelas" wire:model='nama'>
-                    </div>
-                    @error('nama')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="modal-body">
             <div class="row">
-                @if ($gurusIdSelected==true)
+                @if ($siswaIdSelected==true)
                 <div class="col-lg-12">
                     <div class="mb-3">
-                    <label class="form-label">Wali Kelas</label>
+                    <label class="form-label">Nama Siswa</label>
                     @if ($detailMode)
                         <div class="input-group input-group-flat">
-                        <input disabled type="text" class="form-control" name="nama" placeholder="Nama wali kelas" wire:model='gurusDesc'>
+                        <input disabled type="text" class="form-control" name="nama" placeholder="Nama Siswa" wire:model='siswasDesc'>
                         </div>
                     @else
                     <div class="input-group mb-2">
-                        <input disabled type="text" class="form-control" placeholder="" wire:model='gurusDesc'>
+                        <input disabled type="text" class="form-control" placeholder="" wire:model='siswasDesc'>
                         <button wire:click='clearGroupId()' class="btn" type="button">Clear</button>
                     </div>
                     @endif
@@ -211,9 +174,9 @@
                 @else
                 <div class="col-lg-12">
                     <div class="mb-3">
-                    <label class="form-label">Wali Kelas</label>
+                    <label class="form-label">Nama Siswa</label>
                         <div class="input-group input-group-flat">
-                        <input type="text" class="form-control" name="nama" placeholder="Nama wali kelas" wire:model.live='searchGurusData'>
+                        <input type="text" class="form-control" name="nama" placeholder="Nama Siswa" wire:model.live='searchSiswasData'>
                         </div>
                     </div>
                 </div>
@@ -222,19 +185,19 @@
                         <thead>
                         <tr>
                             <th width="10%">Aksi</th>
-                            <th width="10%">NIP</th>
-                            <th width="20%">Wali Kelas</th>
+                            <th width="10%">NIS</th>
+                            <th width="20%">Nama Siswa</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dataGurus as $key => $values )
+                            @foreach ($dataSiswas as $key => $values )
                             <tr>
                                 <td>
-                                <span wire:click='setGurusId({{$values->id}})' class="btn">
+                                <span wire:click='setSiswasId({{$values->id}})' class="btn">
                                     Pilih
                                 </span>
                                 </td>
-                                <td><span class="text-muted">{{ $values->nip }}</span></td>
+                                <td><span class="text-muted">{{ $values->nis }}</span></td>
                                 <td><span class="text-muted">{{ $values->nama }}</span></td>
                             </tr>
                             @endforeach
@@ -242,7 +205,7 @@
                     </table>
                     </div>
                     <div class="card-footer d-flex align-items-center">
-                        {{ $dataGurus->links()}}
+                        {{ $dataSiswas->links()}}
                     </div>
                 </div>
                 @endif
@@ -256,13 +219,13 @@
           <a wire:click='update_data()' class="btn btn-primary ms-auto">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-             Ubah Data Kelas
+             Ubah Konfigurasi Siswa
           </a>
           @elseif ($detailMode == false && $editMode== false)
           <a wire:click='store()' class="btn btn-primary ms-auto">
             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-            Simpan Data Kelas
+            Simpan Konfigurasi Siswa
           </a>
           @endif
         </div>
@@ -274,7 +237,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Hapus Data Kelas</h5>
+          <h5 class="modal-title">Hapus Konfigurasi Siswa</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

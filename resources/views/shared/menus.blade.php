@@ -53,9 +53,6 @@
                       <a class="dropdown-item {{ $cmenu=="kta"?"active":"" }}" href="{{ route('konfigurasi_ta') }}">
                         Tahun Ajar
                       </a>
-                      <a class="dropdown-item {{ $cmenu=="kkelas"?"active":"" }}" href="{{ route('konfigurasi_kelas') }}">
-                        Kelas
-                      </a>
                     </div>
                   </div>
                 </div>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('group', ['X', 'XI', 'XII'])->default('X');
             $table->string('nama');
             $table->string('tahun_ajars_id');
-            $table->string('gurus_id');
+            $table->string('gurus_id')->nullable();
             $table->enum('status', ['A', 'N'])->default('A');
             $table->timestamps();
         });
