@@ -167,6 +167,9 @@ class Siswa extends Component
         $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
         if ($konfSiswa) {
             $this->siswas_id = $konfSiswa->siswas_id;
+            if($this->siswas_id!=""){
+                $this->setSiswasId($this->siswas_id);
+            }
             $this->editMode = true;
             $this->detailMode = false;
         }
@@ -201,21 +204,21 @@ class Siswa extends Component
         try {
             $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
             if (!$konfSiswa) {
-                session()->flash('error', 'Tahun Ajar tidak ditemukan');
+                session()->flash('error', 'Siswa tidak ditemukan');
             }else{
                 $konfSiswa->siswas_id = $this->siswas_id;
                 $konfSiswa->save();
                 $this->dispatch('afterProcess');
-                session()->flash('message', 'Tahun Ajar berhasil diubah');
+                session()->flash('message', 'Siswa berhasil diubah');
             }
         } catch (QueryException $e) {
             Log::error('Database query failed: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Tahun Ajar gagal diubah');
+            session()->flash('error', 'Siswa gagal diubah');
         } catch (\Exception $e) {
             Log::error('An unexpected error occurred: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Tahun Ajar gagal diubah');
+            session()->flash('error', 'Siswa gagal diubah');
         }
         $this->setClearModel();
     }
@@ -224,18 +227,18 @@ class Siswa extends Component
         try {
             $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
             if (!$konfSiswa) {
-                session()->flash('error', 'Kelas tidak ditemukan');
+                session()->flash('error', 'Siswa tidak ditemukan');
             }else{
                 $konfSiswa->status = 'N';
                 $konfSiswa->save();
-                session()->flash('message', 'Kelas berhasil dihapus');
+                session()->flash('message', 'Siswa berhasil dihapus');
             }
         } catch (QueryException $e) {
             Log::error('Database query failed: ' . $e->getMessage());
-            session()->flash('error', 'Kelas gagal dihapus');
+            session()->flash('error', 'Siswa gagal dihapus');
         } catch (\Exception $e) {
             Log::error('An unexpected error occurred: ' . $e->getMessage());
-            session()->flash('error', 'Kelas gagal dihapus');
+            session()->flash('error', 'Siswa gagal dihapus');
         }
         $this->setClearModel();
     }

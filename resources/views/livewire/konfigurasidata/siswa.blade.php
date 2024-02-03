@@ -178,6 +178,9 @@
                         <div class="input-group input-group-flat">
                         <input type="text" class="form-control" name="nama" placeholder="Nama Siswa" wire:model.live='searchSiswasData'>
                         </div>
+                        @error('siswas_id')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="table-responsive">

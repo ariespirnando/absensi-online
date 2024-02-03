@@ -3,6 +3,7 @@
 namespace App\Livewire\Konfigurasidata;
 
 use App\Models\Guru;
+use App\Models\Kelas;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
@@ -88,7 +89,81 @@ class Pelajaran extends Component
 
     public function render()
     {
-        return view('livewire.konfigurasidata.pelajaran');
+        if (!is_numeric($this->totalPagging)) {
+            $this->totalPagging = 10;
+        }
+        if($this->searchData!=""){
+            $dataKonfPelajaran = Konfigurasi_pelajaran::join('pelajarans', 'konfigurasi_pelajarans.pelajarans_id', '=', 'pelajarans.id')
+                ->leftjoin('gurus', 'konfigurasi_pelajarans.gurus_id', '=', 'gurus.id')
+                ->select('konfigurasi_pelajarans.*', 'pelajarans.nama', 'gurus.nama as gurusnama', 'gurus.nip')
+                ->where(
+                function ($query) {
+                    $query->where('pelajarans.nama', 'like', '%'.$this->searchData.'%')
+                    ->orWhere('gurus.nis', 'like', '%'.$this->searchData.'%')
+                    ->orWhere('gurus.nama', 'like', '%'.$this->searchData.'%');
+                })
+                ->where('pelajarans.status', 'A')
+                ->where('konfigurasi_pelajarans.status', 'A')
+                ->where('konfigurasi_pelajarans.kelas_id', $this->kelas_id)
+                ->where('gurus.status', 'A')
+                ->orderBy('pelajarans.nama','asc')
+                ->paginate($this->totalPagging);
+        }else{
+            $dataKonfPelajaran = Konfigurasi_pelajaran::join('pelajarans', 'konfigurasi_pelajarans.pelajarans_id', '=', 'pelajarans.id')
+            ->leftjoin('gurus', 'konfigurasi_pelajarans.gurus_id', '=', 'gurus.id')
+            ->select('konfigurasi_pelajarans.*', 'pelajarans.nama', 'gurus.nama as gurusnama', 'gurus.nip')
+            ->where('pelajarans.status', 'A')
+            ->where('konfigurasi_pelajarans.status', 'A')
+            ->where('konfigurasi_pelajarans.kelas_id', $this->kelas_id)
+            ->where('gurus.status', 'A')
+            ->orderBy('pelajarans.nama','asc')
+            ->paginate($this->totalPagging);
+        }
+        $this->getKelasDesc();
+
+        $excludePelajarans = Konfigurasi_pelajaran::join('pelajarans', 'konfigurasi_pelajarans.pelajarans_id', '=', 'pelajarans.id')
+        ->leftjoin('gurus', 'konfigurasi_pelajarans.gurus_id', '=', 'gurus.id')
+        ->select('konfigurasi_pelajarans.pelajarans_id')
+        ->where('pelajarans.status', 'A')
+        ->where('konfigurasi_pelajarans.status', 'A')
+        ->where('konfigurasi_pelajarans.kelas_id', $this->kelas_id)
+        ->where('gurus.status', 'A')
+        ->orderBy('pelajarans.nama','asc')->get();
+
+        if($this->searchPelajaranData!=""){
+            $dataPelajaran = ModelsPelajaran::whereNotIn('id', $excludePelajarans)
+                ->where('status', 'A')
+                ->where('nama', 'like', '%'.$this->searchPelajaranData.'%')
+                ->orderBy('nama','asc')
+                ->paginate(5);
+        }else{
+            $dataPelajaran = ModelsPelajaran::where('status', 'XXXXX')
+                ->orderBy('nama','asc')
+                ->paginate(5);
+        }
+
+        if($this->searchGurusData!=""){
+            $dataGurus = Guru::where(
+                function ($query) {
+                    $query->where('nip', 'like', '%'.$this->searchGurusData.'%')
+                    ->orWhere('nama', 'like', '%'.$this->searchGurusData.'%');
+                })
+                ->where('status', 'A')
+                ->orderBy('nama','asc')
+                ->paginate(5);
+        }else{
+            $dataGurus = Guru::where('status', 'XXXXX')
+                ->orderBy('nama','asc')
+                ->paginate(5);
+        }
+
+        return view('livewire.konfigurasidata.pelajaran',
+            ['dataKonfPelajaran'=>$dataKonfPelajaran,
+            'kelasDesc'=>$this->kelasDesc,
+            'ta_id'=>$this->kelas_taid,
+            'dataPelajaran'=>$dataPelajaran,
+            'dataGurus'=>$dataGurus]);
+
     }
 
     public function store(){
@@ -97,7 +172,7 @@ class Pelajaran extends Component
         ];
 
         $message = [
-            'pelajarans_id.required' => 'Siswa wajib diisi',
+            'pelajarans_id.required' => 'Pelajaran wajib diisi',
         ];
 
         $this->validate($roles,$message);
@@ -109,22 +184,23 @@ class Pelajaran extends Component
                 'gurus_id' => $this->gurus_id
             ]);
             $this->dispatch('afterProcess');
-            session()->flash('message', 'Siswa berhasil disimpan');
+            session()->flash('message', 'Pelajaran berhasil disimpan');
         } catch (QueryException $e) {
             Log::error('Database query failed: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Siswa gagal disimpan'. $e->getMessage());
+            session()->flash('error', 'Pelajaran gagal disimpan'. $e->getMessage());
         } catch (\Exception $e) {
             Log::error('An unexpected error occurred: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Siswa gagal disimpan'. $e->getMessage());
+            session()->flash('error', 'Pelajaran gagal disimpan'. $e->getMessage());
         }
         $this->setClearModel();
     }
 
     public function setAdd(){
         $this->setClearModel();
-        $this->clearGroupId();
+        $this->clearGurusId();
+        $this->clearPelajaranId();
     }
 
     public function setDeleted($id){
@@ -133,78 +209,88 @@ class Pelajaran extends Component
 
     public function setEdited($id){
         $this->id = $id;
-        $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
-        if ($konfSiswa) {
-            $this->siswas_id = $konfSiswa->siswas_id;
+        $konfPelajaran = Konfigurasi_pelajaran::findOrFail($this->id);
+        if ($konfPelajaran) {
+            $this->pelajarans_id = $konfPelajaran->pelajarans_id;
+            if($this->pelajarans_id!=""){
+                $this->setPelajaranId($this->pelajarans_id);
+            }
+            $this->gurus_id = $konfPelajaran->gurus_id;
+            if($this->gurus_id!=""){
+                $this->setGurusId($this->gurus_id);
+            }
             $this->editMode = true;
             $this->detailMode = false;
         }
     }
     public function setDetails($id){
         $this->id = $id;
-        $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
-        if ($konfSiswa) {
-            $this->siswas_id = $konfSiswa->siswas_id;
+        $konfPelajaran = Konfigurasi_pelajaran::findOrFail($this->id);
+        if ($konfPelajaran) {
+            $this->pelajarans_id = $konfPelajaran->pelajarans_id;
+            $this->gurus_id = $konfPelajaran->gurus_id;
             $this->editMode = false;
             $this->detailMode = true;
         }
     }
     private function setClearModel(){
         $this->id = '';
-        $this->siswas_id = '';
+        $this->pelajarans_id = '';
+        $this->gurus_id = '';
         $this->editMode = false;
         $this->detailMode = false;
     }
 
     public function update_data(){
         $roles = [
-            'siswas_id' => 'required',
+            'pelajarans_id' => 'required',
         ];
 
         $message = [
-            'siswas_id.required' => 'Siswa wajib diisi',
+            'pelajarans_id.required' => 'Pelajaran wajib diisi',
         ];
 
         $this->validate($roles,$message);
 
         try {
-            $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
-            if (!$konfSiswa) {
-                session()->flash('error', 'Tahun Ajar tidak ditemukan');
+            $konfPelajaran = Konfigurasi_pelajaran::findOrFail($this->id);
+            if (!$konfPelajaran) {
+                session()->flash('error', 'Pelajaran tidak ditemukan');
             }else{
-                $konfSiswa->siswas_id = $this->siswas_id;
-                $konfSiswa->save();
+                $konfPelajaran->pelajarans_id = $this->pelajarans_id;
+                $konfPelajaran->gurus_id = $this->gurus_id;
+                $konfPelajaran->save();
                 $this->dispatch('afterProcess');
-                session()->flash('message', 'Tahun Ajar berhasil diubah');
+                session()->flash('message', 'Pelajaran berhasil diubah');
             }
         } catch (QueryException $e) {
             Log::error('Database query failed: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Tahun Ajar gagal diubah');
+            session()->flash('error', 'Pelajaran gagal diubah');
         } catch (\Exception $e) {
             Log::error('An unexpected error occurred: ' . $e->getMessage());
             $this->dispatch('afterProcess');
-            session()->flash('error', 'Tahun Ajar gagal diubah');
+            session()->flash('error', 'Pelajaran gagal diubah');
         }
         $this->setClearModel();
     }
 
     public function remove_data(){
         try {
-            $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
-            if (!$konfSiswa) {
-                session()->flash('error', 'Kelas tidak ditemukan');
+            $konfPelajaran = Konfigurasi_pelajaran::findOrFail($this->id);
+            if (!$konfPelajaran) {
+                session()->flash('error', 'Pelajaran tidak ditemukan');
             }else{
-                $konfSiswa->status = 'N';
-                $konfSiswa->save();
-                session()->flash('message', 'Kelas berhasil dihapus');
+                $konfPelajaran->status = 'N';
+                $konfPelajaran->save();
+                session()->flash('message', 'Pelajaran berhasil dihapus');
             }
         } catch (QueryException $e) {
             Log::error('Database query failed: ' . $e->getMessage());
-            session()->flash('error', 'Kelas gagal dihapus');
+            session()->flash('error', 'Pelajaran gagal dihapus');
         } catch (\Exception $e) {
             Log::error('An unexpected error occurred: ' . $e->getMessage());
-            session()->flash('error', 'Kelas gagal dihapus');
+            session()->flash('error', 'Pelajaran gagal dihapus');
         }
         $this->setClearModel();
     }
