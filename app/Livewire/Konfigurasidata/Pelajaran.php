@@ -62,7 +62,7 @@ class Pelajaran extends Component
         $this->pelajarans_id  = $id;
         $pelajaran = ModelsPelajaran::findOrFail($id);
         if ($pelajaran) {
-            $this->pelajaranDesc = $pelajaran->name;
+            $this->pelajaranDesc = $pelajaran->nama;
             $this->pelajaranIdSelected = true;
         }
     }
@@ -204,10 +204,16 @@ class Pelajaran extends Component
     }
 
     public function setDeleted($id){
+        $this->setClearModel();
+        $this->clearGurusId();
+        $this->clearPelajaranId();
         $this->id = $id;
     }
 
     public function setEdited($id){
+        $this->setClearModel();
+        $this->clearGurusId();
+        $this->clearPelajaranId();
         $this->id = $id;
         $konfPelajaran = Konfigurasi_pelajaran::findOrFail($this->id);
         if ($konfPelajaran) {

@@ -103,7 +103,8 @@
                      <th class="w-1">No. <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>
                     </th>
-                    <th width="80%">Nama</th>
+                    <th width="40%">Nama</th>
+                    <th width="40%">Guru Pengampu</th>
                     <th width="20%">Aksi</th>
                   </tr>
                 </thead>
@@ -112,6 +113,7 @@
                   <tr>
                     <td><span class="text-muted">{{ $dataKonfPelajaran->firstItem() + $key }}</span></td>
                     <td><span class="text-muted">{{ $values->nama }}</span></td>
+                    <td><span class="text-muted">{{ $values->gurusnama }}</span></td>
                     <td>
                         <div class="btn-list flex-nowrap">
                             <a wire:click='setEdited({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
@@ -143,11 +145,11 @@
       <div class="modal-content">
         <div class="modal-header">
           @if ($editMode==true)
-          <h5 class="modal-title">Ubah KonfigurasiPelajaran</h5>
+          <h5 class="modal-title">Ubah Konfigurasi Pelajaran</h5>
           @elseif ($detailMode==true)
-          <h5 class="modal-title">Detail KonfigurasiPelajaran</h5>
+          <h5 class="modal-title">Detail Konfigurasi Pelajaran</h5>
           @else
-          <h5 class="modal-title">TambahPelajaran</h5>
+          <h5 class="modal-title">Tambah Pelajaran</h5>
           @endif
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -156,15 +158,75 @@
                 @if ($pelajaranIdSelected==true)
                 <div class="col-lg-12">
                     <div class="mb-3">
-                    <label class="form-label">NamaPelajaran</label>
+                        <label class="form-label">Nama Pelajaran</label>
+                        @if ($detailMode)
+                            <div class="input-group input-group-flat">
+                            <input disabled type="text" class="form-control" name="nama" placeholder="NamaPelajaran" wire:model='pelajaranDesc'>
+                            </div>
+                        @else
+                        <div class="input-group mb-2">
+                            <input disabled type="text" class="form-control" placeholder="" wire:model='pelajaranDesc'>
+                            <button wire:click='clearPelajaranId()' class="btn" type="button">Clear</button>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                @else
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                    <label class="form-label">Nama Pelajaran</label>
+                        <div class="input-group input-group-flat">
+                        <input type="text" class="form-control" name="nama" placeholder="Nama Pelajaran" wire:model.live='searchPelajaranData'>
+                        </div>
+                        @error('pelajarans_id')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                            <tr>
+                                <th width="10%">Aksi</th>
+                                <th width="40%">Nama</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataPelajaran as $key => $values )
+                                <tr>
+                                    <td>
+                                    <span wire:click='setPelajaranId({{$values->id}})' class="btn">
+                                        Pilih
+                                    </span>
+                                    </td>
+                                    <td><span class="text-muted">{{ $values->nama }}</span></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer d-flex align-items-center">
+                        {{ $dataPelajaran->links()}}
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                @if ($gurusIdSelected==true)
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                    <label class="form-label">Nama Guru</label>
                     @if ($detailMode)
                         <div class="input-group input-group-flat">
-                        <input disabled type="text" class="form-control" name="nama" placeholder="NamaPelajaran" wire:model='pelajaranIdSelected'>
+                        <input disabled type="text" class="form-control" name="nama" placeholder="Nama Guru" wire:model='gurusDesc'>
                         </div>
                     @else
                     <div class="input-group mb-2">
-                        <input disabled type="text" class="form-control" placeholder="" wire:model='pelajaranIdSelected'>
-                        <button wire:click='clearGroupId()' class="btn" type="button">Clear</button>
+                        <input disabled type="text" class="form-control" placeholder="" wire:model='gurusDesc'>
+                        <button wire:click='clearGurusId()' class="btn" type="button">Clear</button>
                     </div>
                     @endif
                     </div>
@@ -172,42 +234,46 @@
                 @else
                 <div class="col-lg-12">
                     <div class="mb-3">
-                    <label class="form-label">NamaPelajaran</label>
+                        <label class="form-label">Nama Guru</label>
                         <div class="input-group input-group-flat">
-                        <input type="text" class="form-control" name="nama" placeholder="NamaPelajaran" wire:model.live='searchPelajaranData'>
+                        <input type="text" class="form-control" name="nama" placeholder="Nama Guru" wire:model.live='searchGurusData'>
                         </div>
-                        @error('siswas_id')
+                        @error('gurus_id')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table card-table table-vcenter text-nowrap datatable">
-                        <thead>
-                        <tr>
-                            <th width="10%">Aksi</th>
-                            <th width="40%">Nama</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($dataPelajaran as $key => $values )
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
                             <tr>
-                                <td>
-                                <span wire:click='setSiswasId({{$values->id}})' class="btn">
-                                    Pilih
-                                </span>
-                                </td>
-                                <td><span class="text-muted">{{ $values->nama }}</span></td>
+                                <th width="10%">Aksi</th>
+                                <th width="10%">NIS</th>
+                                <th width="40%">Nama</th>
                             </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataGurus as $key => $values )
+                                <tr>
+                                    <td>
+                                    <span wire:click='setGurusId({{$values->id}})' class="btn">
+                                        Pilih
+                                    </span>
+                                    </td>
+                                    <td><span class="text-muted">{{ $values->nis }}</span></td>
+                                    <td><span class="text-muted">{{ $values->nama }}</span></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="card-footer d-flex align-items-center">
-                        {{ $dataPelajaran->links()}}
+                        {{ $dataGurus->links()}}
                     </div>
                 </div>
                 @endif
+            </div>
         </div>
 
         <div class="modal-footer">
@@ -236,7 +302,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Hapus KonfigurasiPelajaran</h5>
+          <h5 class="modal-title">Hapus Konfigurasi Pelajaran</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

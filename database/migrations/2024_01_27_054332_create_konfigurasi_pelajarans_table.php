@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kelas_id');
             $table->string('pelajarans_id');
-            $table->string('gurus_id');
+            $table->string('gurus_id')->nullable();
             $table->enum('status', ['A', 'N'])->default('A');
             $table->timestamps();
         });

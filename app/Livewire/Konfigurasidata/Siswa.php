@@ -159,10 +159,14 @@ class Siswa extends Component
     }
 
     public function setDeleted($id){
+        $this->setClearModel();
+        $this->clearGroupId();
         $this->id = $id;
     }
 
     public function setEdited($id){
+        $this->setClearModel();
+        $this->clearGroupId();
         $this->id = $id;
         $konfSiswa = Konfigurasi_siswa::findOrFail($this->id);
         if ($konfSiswa) {

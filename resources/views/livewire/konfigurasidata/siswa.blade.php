@@ -158,23 +158,23 @@
                 @if ($siswaIdSelected==true)
                 <div class="col-lg-12">
                     <div class="mb-3">
-                    <label class="form-label">Nama Siswa</label>
-                    @if ($detailMode)
-                        <div class="input-group input-group-flat">
-                        <input disabled type="text" class="form-control" name="nama" placeholder="Nama Siswa" wire:model='siswasDesc'>
+                        <label class="form-label">Nama Siswa</label>
+                        @if ($detailMode)
+                            <div class="input-group input-group-flat">
+                            <input disabled type="text" class="form-control" name="nama" placeholder="Nama Siswa" wire:model='siswasDesc'>
+                            </div>
+                        @else
+                        <div class="input-group mb-2">
+                            <input disabled type="text" class="form-control" placeholder="" wire:model='siswasDesc'>
+                            <button wire:click='clearGroupId()' class="btn" type="button">Clear</button>
                         </div>
-                    @else
-                    <div class="input-group mb-2">
-                        <input disabled type="text" class="form-control" placeholder="" wire:model='siswasDesc'>
-                        <button wire:click='clearGroupId()' class="btn" type="button">Clear</button>
-                    </div>
-                    @endif
+                        @endif
                     </div>
                 </div>
                 @else
                 <div class="col-lg-12">
                     <div class="mb-3">
-                    <label class="form-label">Nama Siswa</label>
+                        <label class="form-label">Nama Siswa</label>
                         <div class="input-group input-group-flat">
                         <input type="text" class="form-control" name="nama" placeholder="Nama Siswa" wire:model.live='searchSiswasData'>
                         </div>
@@ -183,35 +183,37 @@
                         @enderror
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table card-table table-vcenter text-nowrap datatable">
-                        <thead>
-                        <tr>
-                            <th width="10%">Aksi</th>
-                            <th width="10%">NIS</th>
-                            <th width="20%">Nama Siswa</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($dataSiswas as $key => $values )
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
                             <tr>
-                                <td>
-                                <span wire:click='setSiswasId({{$values->id}})' class="btn">
-                                    Pilih
-                                </span>
-                                </td>
-                                <td><span class="text-muted">{{ $values->nis }}</span></td>
-                                <td><span class="text-muted">{{ $values->nama }}</span></td>
+                                <th width="10%">Aksi</th>
+                                <th width="10%">NIS</th>
+                                <th width="20%">Nama Siswa</th>
                             </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataSiswas as $key => $values )
+                                <tr>
+                                    <td>
+                                    <span wire:click='setSiswasId({{$values->id}})' class="btn">
+                                        Pilih
+                                    </span>
+                                    </td>
+                                    <td><span class="text-muted">{{ $values->nis }}</span></td>
+                                    <td><span class="text-muted">{{ $values->nama }}</span></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="card-footer d-flex align-items-center">
                         {{ $dataSiswas->links()}}
                     </div>
                 </div>
                 @endif
+            </div>
         </div>
 
         <div class="modal-footer">
