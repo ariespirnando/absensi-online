@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('siswas_id')->nullable();
             $table->enum('group_level', ['ADMIN', 'SISWA']);
             $table->enum('level', ['ADMIN', 'BK', 'GURU', 'SISWA']);
+            $table->enum('status', ['A', 'N'])->default('A');
             $table->rememberToken();
             $table->timestamps();
         });

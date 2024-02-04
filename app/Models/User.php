@@ -26,7 +26,8 @@ class User extends Authenticatable
         'group_level',
         'level',
         'gurus_id',
-        'siswas_id'
+        'siswas_id',
+        'status'
     ];
 
     /**
