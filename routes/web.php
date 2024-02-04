@@ -13,6 +13,8 @@ use App\Http\Controllers\RekapitulasiKelasController;
 use App\Http\Controllers\KonfigurasiDataKelasController;
 use App\Http\Controllers\KonfigurasiPelajaranController;
 use App\Http\Controllers\KonfigurasiSiswaController;
+use App\Http\Controllers\PointController;
+use App\Http\Controllers\PointTransactionController;
 use App\Http\Controllers\RekapitulasiSiswaController;
 
 /*
@@ -47,6 +49,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('konfigurasi/pelajaran/{id}', [KonfigurasiPelajaranController::class,'index'])->name('konfigurasi_pelajaran');
         Route::get('konfigurasi/siswa/{id}', [KonfigurasiSiswaController::class,'index'])->name('konfigurasi_siswa');
         Route::get('absensi', [AbsensiController::class,'index'])->name('absensi');
+        Route::get('konfigurasi/point', [PointController::class,'index'])->name('konfigurasi_point');
+        Route::get('point', [PointTransactionController::class,'index'])->name('point');
         Route::get('rekapitulasi/kelas', [RekapitulasiKelasController::class,'index'])->name('rekapitulasi_kelas');
         Route::get('rekapitulasi/siswa', [RekapitulasiSiswaController::class,'index'])->name('rekapitulasi_siswa');
     });

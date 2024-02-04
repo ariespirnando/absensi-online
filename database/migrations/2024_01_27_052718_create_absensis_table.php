@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('gurus_id');
             $table->timestamp('absensis_start')->useCurrent()->nullable();
             $table->timestamp('absensis_end')->nullable();
+            $table->enum('status', ['A', 'N'])->default('A');
             $table->timestamps();
         });
     }

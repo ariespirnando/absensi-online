@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('absensi_details', function (Blueprint $table) {
+        Schema::create('points', function (Blueprint $table) {
             $table->id();
-            $table->string('absensis_id');
-            $table->string('siswas_id');
-            $table->timestamp('absensis_date')->useCurrent()->nullable();
+            $table->integer("value");
+            $table->string("description");
             $table->enum('status', ['A', 'N'])->default('A');
             $table->timestamps();
         });
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('absensi_details');
+        Schema::dropIfExists('points');
     }
 };

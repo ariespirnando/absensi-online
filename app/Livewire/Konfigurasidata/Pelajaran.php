@@ -169,10 +169,12 @@ class Pelajaran extends Component
     public function store(){
         $roles = [
             'pelajarans_id' => 'required',
+            'gurus_id' => 'required',
         ];
 
         $message = [
             'pelajarans_id.required' => 'Pelajaran wajib diisi',
+            'gurus_id.required' => 'Guru pengampu wajib diisi',
         ];
 
         $this->validate($roles,$message);
@@ -250,10 +252,12 @@ class Pelajaran extends Component
     public function update_data(){
         $roles = [
             'pelajarans_id' => 'required',
+            'gurus_id' => 'required',
         ];
 
         $message = [
             'pelajarans_id.required' => 'Pelajaran wajib diisi',
+            'gurus_id.required' => 'Guru pengampu wajib diisi',
         ];
 
         $this->validate($roles,$message);
