@@ -4,17 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SiswaDashboard;
+use App\Http\Controllers\PointController;
 use App\Http\Controllers\AbsensiController;
-use App\Http\Controllers\DataGuruController;
-use App\Http\Controllers\DataSiswaController;
-use App\Http\Controllers\DataPelajaranController;
+use App\Http\Controllers\MasterDataController;
+use App\Http\Controllers\PointTransactionController;
 use App\Http\Controllers\KonfigurasiDataTAController;
 use App\Http\Controllers\RekapitulasiKelasController;
-use App\Http\Controllers\KonfigurasiDataKelasController;
-use App\Http\Controllers\KonfigurasiPelajaranController;
-use App\Http\Controllers\KonfigurasiSiswaController;
-use App\Http\Controllers\PointController;
-use App\Http\Controllers\PointTransactionController;
 use App\Http\Controllers\RekapitulasiSiswaController;
 
 /*
@@ -41,16 +36,23 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['auth.check:ADMIN']], function () {
         Route::get('admin', [AdminDashboard::class,'index'])->name('admin');
-        Route::get('data/guru', [DataGuruController::class,'index'])->name('data_guru');
-        Route::get('data/pelajaran', [DataPelajaranController::class,'index'])->name('data_pelajaran');
-        Route::get('data/siswa', [DataSiswaController::class,'index'])->name('data_siswa');
+
+        Route::get('data/guru', [MasterDataController::class,'guru'])->name('data_guru');
+        Route::get('data/pelajaran', [MasterDataController::class,'pelajaran'])->name('data_pelajaran');
+        Route::get('data/siswa', [MasterDataController::class,'siswa'])->name('data_siswa');
+
         Route::get('konfigurasi/ta', [KonfigurasiDataTAController::class,'index'])->name('konfigurasi_ta');
-        Route::get('konfigurasi/kelas/{id}', [KonfigurasiDataKelasController::class,'index'])->name('konfigurasi_kelas');
-        Route::get('konfigurasi/pelajaran/{id}', [KonfigurasiPelajaranController::class,'index'])->name('konfigurasi_pelajaran');
-        Route::get('konfigurasi/siswa/{id}', [KonfigurasiSiswaController::class,'index'])->name('konfigurasi_siswa');
+        Route::get('konfigurasi/kelas/{id}', [KonfigurasiDataTAController::class,'kelas'])->name('konfigurasi_kelas');
+        Route::get('konfigurasi/pelajaran/{id}', [KonfigurasiDataTAController::class,'pelajaran'])->name('konfigurasi_pelajaran');
+        Route::get('konfigurasi/siswa/{id}', [KonfigurasiDataTAController::class,'siswa'])->name('konfigurasi_siswa');
+
         Route::get('absensi', [AbsensiController::class,'index'])->name('absensi');
+        Route::get('absensi/siswa/{id}', [AbsensiController::class,'details'])->name('absensi_siswa');
+        Route::get('absensi/siswa/details/{id}', [AbsensiController::class,'detailssiswa'])->name('absensi_siswa_details');
+
         Route::get('konfigurasi/point', [PointController::class,'index'])->name('konfigurasi_point');
         Route::get('point', [PointTransactionController::class,'index'])->name('point');
+
         Route::get('rekapitulasi/kelas', [RekapitulasiKelasController::class,'index'])->name('rekapitulasi_kelas');
         Route::get('rekapitulasi/siswa', [RekapitulasiSiswaController::class,'index'])->name('rekapitulasi_siswa');
     });

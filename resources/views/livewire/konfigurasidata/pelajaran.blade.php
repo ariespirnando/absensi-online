@@ -315,6 +315,7 @@
       </div>
     </div>
   </div>
+  {{ csrf_field() }}
 </div>
 
 @livewireScripts

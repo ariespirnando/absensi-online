@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
-            $table->string('tahun_ajars_id');
-            $table->string('kelas_id');
-            $table->string('pelajarans_id');
-            $table->string('gurus_id');
+            $table->string('konfigurasi_pelajarans_id');
+            $table->string('gurus_id')->nullable();
+            $table->string('users_id');
+            $table->string('keterangan');
             $table->timestamp('absensis_start')->useCurrent()->nullable();
             $table->timestamp('absensis_end')->nullable();
             $table->enum('status', ['A', 'N'])->default('A');
