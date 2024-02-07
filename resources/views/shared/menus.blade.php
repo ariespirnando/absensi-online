@@ -53,6 +53,12 @@
                       <a class="dropdown-item {{ $cmenu=="kta"?"active":"" }}" href="{{ route('konfigurasi_ta') }}">
                         Tahun Ajar
                       </a>
+                      <a class="dropdown-item {{ $cmenu=="konfpoint"?"active":"" }}" href="{{ route('konfigurasi_point') }}">
+                        Point
+                      </a>
+                      <a class="dropdown-item {{ $cmenu=="lokasi"?"active":"" }}" href="{{ route('konfigurasi_point') }}">
+                        Lokasi
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -80,10 +86,7 @@
                 </a>
                 <div class="dropdown-menu">
                   <div class="dropdown-menu-columns">
-                    <div class="dropdown-menu-column">
-                      <a class="dropdown-item {{ $cmenu=="konfpoint"?"active":"" }}" href="{{ route('konfigurasi_point') }}">
-                        Konfigurasi Point
-                      </a>
+                    <div class="dropdown-menu-column"> 
                       <a class="dropdown-item {{ $cmenu=="point"?"active":"" }}" href="{{ route('point') }}">
                         Point
                       </a>
