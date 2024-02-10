@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SiswaDashboard;
-use App\Http\Controllers\PointController;
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\PointTransactionController;
 use App\Http\Controllers\KonfigurasiDataTAController;
@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('absensi/siswa/{id}', [AbsensiController::class,'details'])->name('absensi_siswa');
         Route::get('absensi/siswa/details/{id}', [AbsensiController::class,'detailssiswa'])->name('absensi_siswa_details');
 
-        Route::get('konfigurasi/point', [PointController::class,'index'])->name('konfigurasi_point');
+        Route::get('konfigurasi/general', [GeneralController::class,'index'])->name('konfigurasi_general');
         Route::get('point', [PointTransactionController::class,'index'])->name('point');
 
         Route::get('rekapitulasi/kelas', [RekapitulasiKelasController::class,'index'])->name('rekapitulasi_kelas');

@@ -117,7 +117,7 @@
                     <td><span class="text-muted">{{ $values->absensis_end }}</span></td>
                     <td>
                         <div class="btn-list flex-nowrap">
-                            <a wire:click='setDetails({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-report">
+                            <a wire:click='setDetails({{$values->id}})' class="btn" data-bs-toggle="modal" data-bs-target="#modal-qr">
                                 QR
                             </a>
                             <a href="{{ route('absensi_siswa_details', ['id'=>encrypt($values->id)]) }}" class="btn">
@@ -147,14 +147,35 @@
 
 
   {{-- MODAL --}}
+
+  <div wire:ignore.self class="modal modal-blur fade" id="modal-qr" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">QR Data Absensi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <div class="row">
+            {!! QrCode::size(420)->generate(encrypt($id)) !!}
+        </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" id="close_qr_data" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div wire:ignore.self class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           @if ($editMode==true)
           <h5 class="modal-title">Ubah Data Absensi</h5>
-          @elseif ($detailMode==true)
-          <h5 class="modal-title">QR Data Absensi</h5>
           @else
           <h5 class="modal-title">Tambah Absensi</h5>
           @endif
@@ -162,29 +183,25 @@
         </div>
         <div class="modal-body">
         <div class="row">
-            @if ($detailMode)
-            {!! QrCode::size(400)->generate(encrypt($id)) !!}
-            @else
-                <div class="col-lg-12">
-                    <div>
-                        <label class="form-label">Keterangan</label>
-                        <textarea {{ $detailMode?"disabled":""}} class="form-control" name="keterangan" rows="3" wire:model='keterangan'></textarea>
-                        @error('keterangan')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+            <div class="col-lg-12">
+                <div>
+                    <label class="form-label">Keterangan</label>
+                    <textarea {{ $detailMode?"disabled":""}} class="form-control" name="keterangan" rows="3" wire:model='keterangan'></textarea>
+                    @error('keterangan')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
-                @if ($editMode == true)
-                <div class="col-lg-4">
-                    <div>
-                        <label class="form-label">Reset Waktu</label>
-                        <select {{ $detailMode?"disabled":""}} wire:model='resetTimeAbs' class="form-select" name="resetTimeAbs">
-                        <option value="T">Tidak</option>
-                        <option value="Y">Ya</option>
-                        </select>
-                    </div>
+            </div>
+            @if ($editMode == true)
+            <div class="col-lg-4">
+                <div>
+                    <label class="form-label">Reset Waktu</label>
+                    <select {{ $detailMode?"disabled":""}} wire:model='resetTimeAbs' class="form-select" name="resetTimeAbs">
+                    <option value="T">Tidak</option>
+                    <option value="Y">Ya</option>
+                    </select>
                 </div>
-                @endif
+            </div>
             @endif
         </div>
         </div>

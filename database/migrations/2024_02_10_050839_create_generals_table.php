@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('points', function (Blueprint $table) {
+        Schema::create('generals', function (Blueprint $table) {
             $table->id();
-            $table->integer("value");
-            $table->string("description");
+            $table->string('kode_id');
+            $table->string('kode_desc_id');
+            $table->string('desc');
+            $table->string('value');
             $table->enum('status', ['A', 'N'])->default('A');
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('points');
+        Schema::dropIfExists('generals');
     }
 };
